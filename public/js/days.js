@@ -39,7 +39,6 @@ var daysModule = (function () {
     // DOESNT WORK
     function removeCurrentDay() {
         if (days.length === 1) return;
-
         var index = days.indexOf(currentDay);
         days.splice(index, 1);
         switchDay(index);
@@ -110,8 +109,6 @@ var daysModule = (function () {
               }
           });
         } else {
-          var index = currentDay[attraction.type].indexOf(attraction);
-          if (index === -1) return;
           var type = attraction.type;
           $.ajax({
               url: '/api/days/' + currentDay._id + '/' + type,
@@ -130,7 +127,7 @@ var daysModule = (function () {
         }
     };
 
-    // DOESNT WORK
+    // works
     function renderDay(day) {
       mapModule.eraseMarkers();
       day = day || currentDay;
@@ -138,13 +135,13 @@ var daysModule = (function () {
         if (key === 'hotels') {
           var $list = $('#itinerary ul[data-type="' + key + '"]');
           $list.empty();
-          $list.append(itineraryHTML(day[key]));
+          $list.append(itineraryHTML(day[key], key));
           mapModule.drawAttraction(day[key]);
         } else if (key === 'restaurants' || key === 'activities') {
           var $list = $('#itinerary ul[data-type="' + key + '"]');
           $list.empty();
           day[key].forEach(function(attraction){
-            $list.append(itineraryHTML(attraction));
+            $list.append(itineraryHTML(attraction, key));
             mapModule.drawAttraction(attraction);
           });
         }
@@ -152,8 +149,8 @@ var daysModule = (function () {
     }
 
     // Works
-    function itineraryHTML(attraction) {
-        return '<div class="itinerary-item><span class="title>' + attraction.name + '</span><button data-id="' + attraction._id + '" data-type="' + attraction.type + '" class="btn btn-xs btn-danger remove btn-circle">x</button></div>';
+    function itineraryHTML(attraction, key) {
+        return '<div class="itinerary-item><span class="title>' + attraction.name + '</span><button data-id="' + attraction._id + '" data-type="' + key + '" class="btn btn-xs btn-danger remove btn-circle">x</button></div>';
     }
 
     // WORKS

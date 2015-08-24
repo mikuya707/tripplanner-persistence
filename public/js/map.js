@@ -20,7 +20,6 @@ var mapModule = (function(){
   }
 
   exports.drawAttraction = function (attraction) {
-    console.log('this', attraction);
     var coords = attraction.place[0].location,
         options = {
           icon: iconPath[attraction.type],

@@ -15,7 +15,6 @@ router.get("/", function(req, res, next) {
 	.populate('restaurants')
 	.populate('activities')
 	.then(function(day){
-		console.log(day);
 		res.send(day);
 	}).then(null, next);
 
@@ -33,17 +32,7 @@ router.get('/attractions', function(req, res, next) {
 	    });
 	  });
 });
-// router.get('/:id', function(req, res, next) {
-// 	Day.findOne({number: req.params.id})
-// 	.populate('hotels')
-// 	.populate('restaurants')
-// 	.populate('activities')
-// 	.then(function(day){
-// 		console.log(day);
-// 		res.send(day);
-// 	}).then(null, next);
 
-// });
 router.get('/:id/restaurants', function(req, res, next) {
 	res.send('all restaurants');
 	
@@ -70,7 +59,6 @@ router.post('/:id/restaurants', function(req, res, next) {
 		day.save().then(function(day){
 			Day.populate(day, [{path: 'restaurants'}, {path: 'hotels'}, {path: 'activities'}])
 			.then(function(day){
-				console.log(day);
 				res.send(day);
 			});
 		});
@@ -83,7 +71,6 @@ router.post('/:id/hotel', function(req, res, next) {
 		day.save().then(function(day){
 			Day.populate(day, [{path: 'restaurants'}, {path: 'hotels'}, {path: 'activities'}])
 			.then(function(day){
-				console.log(day);
 				res.send(day);
 			});
 		});
