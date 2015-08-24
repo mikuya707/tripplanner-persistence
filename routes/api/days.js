@@ -68,12 +68,11 @@ router.post('/:id/restaurants', function(req, res, next) {
 	.then(function(day){
 		day['restaurants'].push(req.body.type);
 		day.save().then(function(day){
-			Day.populate(day, {path: 'restaurants'})
+			Day.populate(day, [{path: 'restaurants'}, {path: 'hotels'}, {path: 'activities'}])
 			.then(function(day){
 				console.log(day);
 				res.send(day);
 			});
-			res.send(day);
 		});
 	});
 });
@@ -82,7 +81,7 @@ router.post('/:id/hotel', function(req, res, next) {
 	.then(function(day){
 		day['hotels'] = req.body.hotelId;
 		day.save().then(function(day){
-			Day.populate(day, {path: 'hotels'})
+			Day.populate(day, [{path: 'restaurants'}, {path: 'hotels'}, {path: 'activities'}])
 			.then(function(day){
 				console.log(day);
 				res.send(day);
@@ -95,12 +94,10 @@ router.post('/:id/activities', function(req, res, next) {
 	.then(function(day){
 		day['activities'].push(req.body.type);
 		day.save().then(function(day){
-			Day.populate(day, {path: 'activities'})
+			Day.populate(day, [{path: 'restaurants'}, {path: 'hotels'}, {path: 'activities'}])
 			.then(function(day){
-				console.log(day);
 				res.send(day);
 			});
-			res.send(day);
 		});
 	});
 });
