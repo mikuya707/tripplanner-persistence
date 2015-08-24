@@ -4,6 +4,7 @@ var bodyParser = require('body-parser');
 var swig = require('swig');
 var sassMiddleware = require('node-sass-middleware'); 
 
+
 var app = express();
 
 // set up rendering with swig
@@ -33,6 +34,7 @@ app.use(express.static(__dirname + '/public'));
 
 // serve routes
 app.use(require('./routes'));
+app.use("/api/days", require('./routes/api/days'));
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
