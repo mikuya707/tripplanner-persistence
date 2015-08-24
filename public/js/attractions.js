@@ -1,13 +1,23 @@
-'use strict';
+
 /* global $ daysModule all_hotels all_restaurants all_activities */
 
 $(document).ready(function() {
 
-  var attractionsByType = {
-    hotels:      all_hotels,
-    restaurants: all_restaurants,
-    activities:  all_activities
-  };
+  var attractionsByType;
+
+  function getAllAttractions(){
+    $.ajax({
+      url: '/api/days/attractions',
+      method: 'get',
+      success: function(attractions) {
+        attractionsByType = attractions;
+      },
+      error: function(err) {
+        return err; 
+      }
+    });
+  }
+  getAllAttractions();
 
   function findByTypeAndId (type, id) {
     var attractions = attractionsByType[type],
@@ -36,5 +46,7 @@ $(document).ready(function() {
         id = $button.data('id');
     daysModule.removeAttraction(findByTypeAndId(type, id));
   });
+
+
 
 });
